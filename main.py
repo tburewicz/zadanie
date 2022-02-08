@@ -32,11 +32,11 @@ print("Parameters\nSet zip file name:")
 setZipName = input()
 setZipName = setZipName + ".zip"
 
-testFile = checkExist(setZipName)
-if testFile == None:
+check = checkExist(setZipName)
+if check == None:
     print("Set new file version")
 else:
-    print("\n" + str(testFile) + "\nSet new version:")
+    print("\n" + str(check) + "\nSet new version:")
 setVersion = input()
 
 print("Do you want to save update date? (y/n)")

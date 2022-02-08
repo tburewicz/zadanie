@@ -59,7 +59,7 @@ check = checkExist(setZipName)
 
 with open('VERSION.txt', 'w') as f:
     f.write("Actual version: " + str(setVersion))
-if update == "y":
+if update == "y" or update == "yes":
     with open('updated.txt', 'w') as f:
         f.write(str(currentDate))
     update = "updated.txt"
@@ -67,7 +67,8 @@ if update == "y":
         currentDate) + "\n")
 else:
     update = 0
-    #os.remove("updated.txt")
+    if os.path.exists("updated.txt"):
+        os.remove("updated.txt")
     print("\nFile name: " + str(setZipName) + "\nFile version: " + str(setVersion) + "\n")
 
 createZipFile(setZipName, 'VERSION.txt', update)

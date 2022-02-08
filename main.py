@@ -10,6 +10,8 @@ if len(sys.argv) == 3:
     update = "n"
 else:
     update = sys.argv[3]
+    if not update == "yes" or "y":
+        wrongParam = "Third parameter was wrong. Update file not created/updated"
 
 # Check if *.ZIP
 if not setZipName.endswith('.zip'):
@@ -53,6 +55,8 @@ def checkExist(name):
             return f.read()
         else:
             print("File 'VERSION.txt' deosnt exist, but it will be soon.")
+    else:
+        print("\nFile " + str(name) + " created")
 
 
 check = checkExist(setZipName)
@@ -69,6 +73,6 @@ else:
     update = 0
     if os.path.exists("updated.txt"):
         os.remove("updated.txt")
-    print("\nFile name: " + str(setZipName) + "\nFile version: " + str(setVersion) + "\n")
+    print("\nFile name: " + str(setZipName) + "\nFile version: " + str(setVersion) + "\n" + wrongParam + "\n")
 
 createZipFile(setZipName, 'VERSION.txt', update)

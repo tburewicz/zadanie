@@ -6,7 +6,10 @@ from datetime import datetime
 # Params
 setZipName = sys.argv[1]
 setVersion = sys.argv[2]
-update = sys.argv[3]
+if len(sys.argv) == 3:
+    update = "n"
+else:
+    update = sys.argv[3]
 
 # Check if *.ZIP
 if not setZipName.endswith('.zip'):
@@ -64,7 +67,7 @@ if update == "y":
         currentDate) + "\n")
 else:
     update = 0
-    os.remove("updated.txt")
+    #os.remove("updated.txt")
     print("\nFile name: " + str(setZipName) + "\nFile version: " + str(setVersion) + "\n")
 
 createZipFile(setZipName, 'VERSION.txt', update)

@@ -56,10 +56,3 @@ else:
         os.remove("updated.txt")
 
 createZipFile(setZipName, 'VERSION.txt', update)
-
-
-
-
-
-
-

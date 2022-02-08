@@ -1,16 +1,38 @@
+import sys
 from zipfile import *
 import os
 from datetime import datetime
 
-def createZipFile(zipName,version,updated):
-    zipObject = ZipFile(zipName, 'w')
-    zipObject.write(version)
+# Params
+setZipName = sys.argv[1]
+setVersion = sys.argv[2]
+update = sys.argv[3]
+
+# Check if *.ZIP
+if not setZipName.endswith('.zip'):
+    setZipName = setZipName + ".zip"
+
+# Current day and time
+now = datetime.now()
+currentDay = datetime.today().strftime('%Y-%m-%d')
+currentTime = now.strftime("%H:%M:%S")
+currentDate = currentDay + " " + currentTime
+
+# Check if *.ZIP
+if setVersion.endswith('.zip'):
+    setZipName = setZipName + ".zip"
+
+
+def createZipFile(zipname, version, updated):
+    zipobject = ZipFile(zipname, 'w')
+    zipobject.write(version)
     if updated != 0:
-        zipObject.write(updated)
+        zipobject.write(updated)
         os.remove(updated)
     os.remove(version)
 
-def unzipFile(source,finish):
+
+def unzipFile(source, finish):
     try:
         with ZipFile(source, 'r') as zip:
             zip.extractall(finish)
@@ -18,38 +40,31 @@ def unzipFile(source,finish):
         print("File corrupted")
         exit(1)
 
+
 def checkExist(name):
     if os.path.isfile(str(name)):
-        print(str(name) + " already exists.")
+        print("File " + str(name) + " status:  ALREADY EXISTS.")
         unzipFile(name, "./")
         if os.path.isfile("VERSION.txt"):
             f = open("VERSION.txt", "r")
             return f.read()
         else:
-            print("File 'VERSION.txt' deosn't exist, but it will be soon.")
+            print("File 'VERSION.txt' deosnt exist, but it will be soon.")
 
-print("Parameters\nSet zip file name:")
-setZipName = input()
-setZipName = setZipName + ".zip"
 
 check = checkExist(setZipName)
-if check == None:
-    print("Set new file version")
-else:
-    print("\n" + str(check) + "\nSet new version:")
-setVersion = input()
-
-print("Do you want to save update date? (y/n)")
-update = input()
 
 with open('VERSION.txt', 'w') as f:
     f.write("Actual version: " + str(setVersion))
 if update == "y":
-    actualDate = datetime.today().strftime('%Y-%m-%d')
     with open('updated.txt', 'w') as f:
-        f.write(str(actualDate))
+        f.write(str(currentDate))
     update = "updated.txt"
+    print("\nFile name: " + str(setZipName) + "\nFile version: " + str(setVersion) + "\nUpdate date: " + str(
+        currentDate) + "\n")
 else:
     update = 0
+    os.remove("updated.txt")
+    print("\nFile name: " + str(setZipName) + "\nFile version: " + str(setVersion) + "\n")
 
 createZipFile(setZipName, 'VERSION.txt', update)

@@ -51,8 +51,5 @@ if update == "y":
     update = "updated.txt"
 else:
     update = 0
-    if os.path.isfile("updated.txt"):
-        #if user dont want to have update file it can be deleted if exists
-        os.remove("updated.txt")
 
 createZipFile(setZipName, 'VERSION.txt', update)

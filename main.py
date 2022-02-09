@@ -8,6 +8,7 @@ setZipName = sys.argv[1]
 setVersion = sys.argv[2]
 if len(sys.argv) == 3:
     update = "n"
+    wrongParam = "Third parameter was wrong. Update file not created/updated"
 else:
     update = sys.argv[3]
     if not update == "yes" or "y":
